@@ -1,0 +1,17 @@
+.logoAviasales {
+  display: block;
+  margin: 50px auto;
+}
+
+.containerColumn {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  
+  .containerFilterIsList {
+	display: flex;
+	flex-direction: column;
+	width: 502px;
+	gap: 20px;
+  }
+}
