@@ -29,13 +29,13 @@ $cursorAssets: 'src/assets/cursor.svg';
 	
 	&:hover {
 	  background-color: #f1fcff;
-	  cursor: url('src/assets/cursor.svg'), pointer;
+	  cursor: url('../../../public/assets/cursor.svg'), pointer;
 	}
 	
 	label {
 	  &:hover {
 		background-color: #f1fcff;
-		cursor: url('src/assets/cursor.svg'), pointer;
+		cursor: url('../../../public/assets/cursor.svg'), pointer;
 	  }
 	}
 	
@@ -52,7 +52,7 @@ $cursorAssets: 'src/assets/cursor.svg';
 	  
 	  &:hover {
 		background-color: #f1fcff;
-		cursor: url('src/assets/cursor.svg'), pointer;
+		cursor: url('../../../public/assets/cursor.svg'), pointer;
 	  }
 	  
 	  &:after {
@@ -63,7 +63,7 @@ $cursorAssets: 'src/assets/cursor.svg';
 		width: 0;
 		height: 0;
 		font-size: 30px;
-		background-image: url('src/assets/check.svg');
+		background-image: url('../../../public/assets/check.svg');
 		background-repeat: no-repeat;
 		transition: 200ms;
 	  }
