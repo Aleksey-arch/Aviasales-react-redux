@@ -1,6 +1,7 @@
 $cursorAssets: 'src/assets/cursor.svg';
 
 .container {
+  
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -10,6 +11,7 @@ $cursorAssets: 'src/assets/cursor.svg';
   border-radius: 6px;
   
   .btn {
+	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
 	font-weight: 500;
 	text-transform: uppercase;
