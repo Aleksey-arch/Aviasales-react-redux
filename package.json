@@ -2,6 +2,7 @@
   "name": "aviasales-react-redux",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://Aleksey-arch.github.io/aviasales-react-redux",
   "type": "module",
   "scripts": {
     "dev": "vite",
