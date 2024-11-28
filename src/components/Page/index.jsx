@@ -1,4 +1,6 @@
 import classes from './index.module.scss';
+import cursor from '../../assets/logo.svg';
+import check from '../../assets/logo.svg';
 import logo from '../../assets/logo.svg';
 import TransfersFilters from '../TransfersFilters/index.jsx';
 import Filters from '../Filters/index.jsx';
@@ -13,9 +15,10 @@ function Page() {
       <div>
         <div className={classes.containerLogo}>
           <img src={logo} className={classes.logoAviasales} />
+          <img src={cursor} className={classes.logoAviasales} />
+          <img src={check} className={classes.logoAviasales} />
           {loadingFetchListTickets ? <LoadingLogo /> : null}
         </div>
-
         <div className={classes.containerColumn}>
           <TransfersFilters />
           <div className={classes.containerFilterIsList}>
