@@ -19,7 +19,7 @@ $cursorAssets: 'src/assets/cursor.svg';
 	border: 1px solid #dfe5ec;
 	background-color: #FFFFFF;
 	border-right: 0;
-	cursor: url($cursorAssets), pointer;
+	cursor: url('src/assets/cursor.svg'), pointer;
 	
 	&:hover {
 	  background-color: #75bcf4;
