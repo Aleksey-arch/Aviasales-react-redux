@@ -29,13 +29,13 @@ $cursorAssets: 'src/assets/cursor.svg';
 	
 	&:hover {
 	  background-color: #f1fcff;
-	  cursor: url($cursorAssets), pointer;
+	  cursor: url('src/assets/cursor.svg'), pointer;
 	}
 	
 	label {
 	  &:hover {
 		background-color: #f1fcff;
-		cursor: url($cursorAssets), pointer;
+		cursor: url('src/assets/cursor.svg'), pointer;
 	  }
 	}
 	
@@ -52,7 +52,7 @@ $cursorAssets: 'src/assets/cursor.svg';
 	  
 	  &:hover {
 		background-color: #f1fcff;
-		cursor: url($cursorAssets), pointer;
+		cursor: url('src/assets/cursor.svg'), pointer;
 	  }
 	  
 	  &:after {
