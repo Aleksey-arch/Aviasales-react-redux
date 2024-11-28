@@ -8,6 +8,7 @@ export const useActionsFilters = () => {
     () => ({
       tabsSort: (type) => dispatch(actions.tabsSort(type)),
       transfersFilter: (type) => dispatch(actions.transfersFilter(type)),
+      loadingFetchList: (type) => dispatch(actions.loadingFetchList(type)),
     }),
     [dispatch],
   );

@@ -9,7 +9,6 @@ function ItemList(tickets) {
     }
     return price.toLocaleString('ru-RU');
   };
-  // console.log(tickets);
 
   const hoursIn = Math.floor(segments[0].duration / 60);
   const minutesIn = segments[0].duration - hoursIn * 60;
@@ -91,9 +90,7 @@ function ItemList(tickets) {
               <p
                 className={classes.intervalHeading}
               >{`${segments[1].origin} - ${segments[1].destination}`}</p>
-              <p
-                className={classes.intervalValue}
-              >{`${hoursOut}ч ${minutesOut}м`}</p>
+              <p className={classes.intervalValue}>{timeDown}</p>
             </div>
 
             <div className={classes.time}>

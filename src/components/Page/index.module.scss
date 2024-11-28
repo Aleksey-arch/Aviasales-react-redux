@@ -1,7 +1,19 @@
-.logoAviasales {
-  display: block;
-  margin: 50px auto;
+.containerLogo {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 150px;
+  height: 190px;
+  margin: 0 auto;
+  
+  .logoAviasales {
+	display: block;
+	margin-top: 39px;
+	position: absolute;
+	z-index: 1;
+  }
 }
+
 
 .containerColumn {
   display: flex;
@@ -13,5 +25,11 @@
 	flex-direction: column;
 	width: 502px;
 	gap: 20px;
+  }
+  
+  .logoLoading {
+	position: absolute;
+	top: 0;
+	right: 0;
   }
 }

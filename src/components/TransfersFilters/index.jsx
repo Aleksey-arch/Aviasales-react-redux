@@ -29,10 +29,10 @@ function TransfersFilters() {
             className={classes.checkBoxInput}
             type="checkbox"
             id="selectedAll"
-            checked={selectedAll} // Используем checked, а не defaultChecked
+            checked={selectedAll}
             onChange={() => {
               changeSelectedAll();
-            }} //Вызов dispatch
+            }}
           />
           <label htmlFor="selectedAll">Все</label>
         </label>

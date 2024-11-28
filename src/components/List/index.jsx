@@ -22,7 +22,7 @@ function List() {
 
   const stateTransferFilters = useSelector((store) => store.transfersFilters);
 
-  const { transfersFilter } = useActionsFilters();
+  const { transfersFilter, loadingFetchList } = useActionsFilters();
 
   const dispatch = useDispatch();
 
@@ -34,43 +34,70 @@ function List() {
     error,
     loading,
     ticketsWithoutTransfers,
+    stopFetch,
+    conditionFilters,
+    loadingFetchListTickets,
   } = useSelector((store) => store.getTickets);
 
   const [currentDataTickets, setCurrentDataTickets] = useState([]);
   const [countItem, setCountItem] = useState(5);
 
   useEffect(() => {
-    dispatch(getSearchId())
-      .unwrap()
-      .then((response) => {
-        if (response && response.searchId) {
-          dispatch(getTickets(response.searchId));
-        }
-      })
-      .catch((error) => {
-        console.error('Ошибка при получении данных:', error);
-        // Обработка ошибок. Возможно, стоит вывести сообщение об ошибке пользователю.
-      });
-  }, [dispatch]);
+    loadingFetchList(true);
+    let timer;
+    const fetchTickets = () => {
+      dispatch(getSearchId())
+        .unwrap()
+        .then((response) => {
+          if (response && response.searchId) {
+            const fetchAndCheckStop = () => {
+              dispatch(getTickets(response.searchId)).then((action) => {
+                if (stopFetch || action?.payload?.stop) {
+                  loadingFetchList(false);
+                  return;
+                } else {
+                  timer = setTimeout(fetchAndCheckStop, 1000);
+                }
+              });
+            };
+            fetchAndCheckStop();
+          }
+        })
+        .catch((error) => {
+          console.error('Ошибка:', error);
+        });
+    };
+    fetchTickets();
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
-    if (status === 'resolved getTickets' && currentTickets.tickets !== 0) {
-      const actualData = Object.values(currentTickets.tickets).slice(0, 5);
+    if (status === 'resolved getTickets' && currentTickets.length !== 0) {
+      setCountItem(5);
+      const actualData = [...currentTickets].slice(0, 5);
+
       setCurrentDataTickets(actualData);
     }
-  }, [status, errorTransfers, currentTickets]);
+  }, [errorTransfers, stateTransferFilters, stopFetch, conditionFilters]);
 
   const clickBtnShowMore = () => {
-    const actualData = Object.values(currentTickets.tickets);
+    const actualData = [...currentTickets];
+
     setCurrentDataTickets([...actualData.slice(0, countItem + 5)]);
     setCountItem((prev) => prev + 5);
   };
 
   useEffect(() => {
-    if (withoutTransfers) {
-      transfersFilter('withoutTransfers');
+    if (tickets.length !== 0) {
+      const arrTypes = [];
+      for (const key in stateTransferFilters) {
+        if (stateTransferFilters[key]) {
+          arrTypes.push(`${key}`);
+        }
+      }
+      transfersFilter(arrTypes);
     }
-  }, [stateTransferFilters]);
+  }, [stateTransferFilters, loading]);
 
   return (
     <>

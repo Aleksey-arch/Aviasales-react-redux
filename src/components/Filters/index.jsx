@@ -1,17 +1,22 @@
 import classes from './index.module.scss';
 import { useActionsFilters } from '../../hooks/useActionsFilters.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Filters() {
-  // const classActive = classes.active;
   const [activeTabLowCost, setActiveTabLowCost] = useState(null);
   const [activeTabFasts, setActiveTabFasts] = useState(null);
   const [activeTabOptimal, setActiveTabOptimal] = useState(null);
+  const [conditionTabsSorted, setConditionTabsSorted] = useState(null);
   const { tabsSort } = useActionsFilters();
 
   const tabsFilter = (type) => {
     tabsSort(type);
   };
+  useEffect(() => {
+    if (conditionTabsSorted !== null) {
+      setConditionTabsSorted();
+    }
+  }, []);
 
   const getActiveClassName = (type) => {
     if (type === 'btnLowCost') {

@@ -44,38 +44,76 @@ export const apiGetTicketsSlice = createSlice({
     searchId: null,
     tickets: [],
     currentTickets: [],
-    // ticketsWithoutTransfers: [],
     status: null,
     error: null,
     loading: false,
+    stopFetch: null,
+    conditionFilters: false,
+    loadingFetchListTickets: false,
   },
   reducers: {
     transfersFilter: (state, action) => {
-      if (action.payload === 'withoutTransfers') {
-        // console.log(state.currentTickets.tickets);
-        // return state;
-        // const newStateWithoutTransfers = [
-        //   ...state.currentTickets.tickets,
-        // ].filter(
-        //   (item) =>
-        //     item.segments[0].stops.length === 0 &&
-        //     item.segments[1].stops.length === 0,
-        // );
-        // // console.log(state.tickets.tickets[0]);
-        // return {
-        //   ...state,
-        //   currentTickets: {
-        //     ...state.currentTickets,
-        //     // tickets: newStateWithoutTransfers,
-        //   },
-        // };
+      if (action.payload.length !== 0) {
+        if (action.payload.includes('selectedAll') === true) {
+          const newStateWithoutTransfers = [...state.tickets];
+
+          return {
+            ...state,
+            currentTickets: [...newStateWithoutTransfers],
+          };
+        } else {
+          const arrResults = [];
+          action.payload.forEach((item) => {
+            if (item === 'withoutTransfers') {
+              const newStateWithoutTransfers = [...state.tickets].filter(
+                (item) =>
+                  item.segments[0].stops.length === 0 &&
+                  item.segments[1].stops.length === 0,
+              );
+
+              arrResults.push(...newStateWithoutTransfers);
+            }
+            if (item === 'oneTransfers') {
+              const newStateWithoutTransfers = [...state.tickets].filter(
+                (item) =>
+                  item.segments[0].stops.length === 1 &&
+                  item.segments[1].stops.length === 1,
+              );
+
+              arrResults.push(...newStateWithoutTransfers);
+            }
+            if (item === 'twoTransfers') {
+              const newStateWithoutTransfers = [...state.tickets].filter(
+                (item) =>
+                  item.segments[0].stops.length === 2 &&
+                  item.segments[1].stops.length === 2,
+              );
+
+              arrResults.push(...newStateWithoutTransfers);
+            }
+            if (item === 'threeTransfers') {
+              const newStateWithoutTransfers = [...state.tickets].filter(
+                (item) =>
+                  item.segments[0].stops.length === 3 &&
+                  item.segments[1].stops.length === 3,
+              );
+
+              arrResults.push(...newStateWithoutTransfers);
+            }
+          });
+          return {
+            ...state,
+            currentTickets: [...arrResults],
+            conditionFilters: !state.conditionFilters,
+          };
+        }
       }
     },
     tabsSort: (state, action) => {
       const type = action.payload;
 
-      if (state.currentTickets && state.currentTickets.tickets) {
-        const sortedTickets = [...state.currentTickets.tickets].sort((a, b) => {
+      if (state.currentTickets) {
+        const sortedTickets = [...state.currentTickets].sort((a, b) => {
           switch (type) {
             case 'btnLowCost':
               return a.price - b.price;
@@ -99,13 +137,14 @@ export const apiGetTicketsSlice = createSlice({
 
         return {
           ...state,
-          currentTickets: {
-            ...state.currentTickets,
-            tickets: sortedTickets,
-          },
+          currentTickets: [...sortedTickets],
+          conditionFilters: !state.conditionFilters,
         };
       }
       return state;
+    },
+    loadingFetchList: (state, action) => {
+      state.loadingFetchListTickets = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -129,20 +168,24 @@ export const apiGetTicketsSlice = createSlice({
 
       .addCase(getTickets.pending, (state, action) => {
         state.status = 'index getTickets';
-        state.loading = true;
+        state.loading = false;
         state.error = null;
       })
       .addCase(getTickets.fulfilled, (state, action) => {
         state.status = 'resolved getTickets';
         state.loading = false;
-        state.tickets = action.payload;
-        state.currentTickets = action.payload;
+        state.tickets = [...state.tickets, ...action.payload.tickets];
+        state.currentTickets = [
+          ...state.currentTickets,
+          ...action.payload.tickets,
+        ];
         state.error = null;
+        state.stopFetch = action.payload.stop;
       })
       .addCase(getTickets.rejected, (state, action) => {
         state.status = 'rejected getTickets';
         state.loading = false;
-        state.error = true;
+        state.error = null;
       });
   },
 });
